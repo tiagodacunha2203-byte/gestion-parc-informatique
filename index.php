@@ -37,6 +37,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 
 $liste = $connexion->query("SELECT * FROM vue_materiel ORDER BY id ASC")->fetchAll();
+?> <!DOCTYPE html>
+<html lang="fr">
+<head>
 
 <!DOCTYPE html>
 <html lang="fr">
