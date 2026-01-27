@@ -1,3 +1,17 @@
+CREATE TABLE materiel (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100),
+    annee INT,
+    details TEXT,
+    type_libelle VARCHAR(50), -- Correspond au PHP
+    parent_nom VARCHAR(100)   -- Correspond au PHP
+);
+
+-- Insertion exemple pour l'interface
+INSERT INTO materiel (nom, annee, details, type_libelle, parent_nom) VALUES 
+('PC 1', 2016, 'Unité centrale', 'PC', NULL),
+('CPU PC1', 2016, 'Intel Core i3', 'CPU', 'PC 1');
+
 -- Suppression des tables si elles existent (pour pouvoir relancer le script)
 DROP TABLE IF EXISTS MATERIEL;
 DROP TABLE IF EXISTS CATEGORIE;
