@@ -54,3 +54,20 @@ INSERT INTO MATERIEL (id_mat, nom, annee, details, id_type, id_parent) VALUES
 (32, 'Disque PC3', 2015, 'HDD WD Blue 500 Go', 5, 3),
 (33, 'Batterie PC3', 2015, 'usée (≈ 40 min)', 9, 3),
 (34, 'OS PC3', 2015, 'Windows 10 Pro', 8, 3);
+
+
+
+
+
+
+SELECT 
+    m.id_mat AS ID,
+    m.nom AS Nom,
+    m.annee AS Année,
+    m.details AS Détails,
+    c.libelle AS Type,
+    p.nom AS "Appartient à"
+FROM MATERIEL m
+LEFT JOIN CATEGORIE c ON m.id_type = c.id_type
+LEFT JOIN MATERIEL p ON m.id_parent = p.id_mat
+ORDER BY m.id_mat;
