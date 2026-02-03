@@ -9,9 +9,9 @@ CREATE TABLE CATEGORIE (
     libelle VARCHAR(50) NOT NULL
 );
 
--- 3. Création de la table MATERIEL (Structure conforme au MCD)
+-- Modifie la création de la table MATERIEL
 CREATE TABLE MATERIEL (
-    id INT PRIMARY KEY, -- Renommé 'id' pour le PHP
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Ajout de l'auto-incrémentation
     nom VARCHAR(100) NOT NULL,
     annee INT,
     details TEXT,
