@@ -33,7 +33,7 @@ if (!empty($_POST['nom']) && !empty($_POST['id_type'])) {
 
 // --- RÉCUPÉRATION DES DONNÉES ---
 
-// 1. Détails d'un élément sélectionné au clic
+// Détails d'un élément sélectionné au clic
 $selected = null;
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $sel = $connexion->prepare("SELECT * FROM vue_materiel WHERE id = ?");
@@ -41,13 +41,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $selected = $sel->fetch();
 }
 
-// 2. Liste pour le tableau (via ta vue SQL)
+// Liste pour le tableau (via ta vue SQL)
 $liste = $connexion->query("SELECT * FROM vue_materiel ORDER BY id ASC")->fetchAll();
 
-// 3. Liste des catégories (pour le menu déroulant Type)
+// Liste des catégories (pour le menu déroulant Type)
 $categories = $connexion->query("SELECT * FROM CATEGORIE ORDER BY libelle ASC")->fetchAll();
 
-// 4. Liste des matériels existants (pour le menu déroulant Parent)
+// Liste des matériels existants (pour le menu déroulant Parent)
 $parents = $connexion->query("SELECT id, nom FROM MATERIEL ORDER BY nom ASC")->fetchAll();
 
 ?>
