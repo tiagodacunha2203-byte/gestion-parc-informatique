@@ -1,9 +1,9 @@
--- 1. Nettoyage
+-- Nettoyage
 DROP VIEW IF EXISTS vue_materiel;
 DROP TABLE IF EXISTS MATERIEL;
 DROP TABLE IF EXISTS CATEGORIE;
 
--- 2. Création de la table CATEGORIE
+-- Création de la table CATEGORIE
 CREATE TABLE CATEGORIE (
     id_type INT PRIMARY KEY,
     libelle VARCHAR(50) NOT NULL
@@ -21,12 +21,12 @@ CREATE TABLE MATERIEL (
     CONSTRAINT fk_parent FOREIGN KEY (id_parent) REFERENCES MATERIEL(id)
 );
 
--- 4. Insertion des catégories
+--  Insertion des catégories
 INSERT INTO CATEGORIE (id_type, libelle) VALUES 
 (1, 'PC'), (2, 'Écran'), (3, 'CPU'), (4, 'RAM'), (5, 'Disque'), 
 (6, 'GPU'), (7, 'Carte réseau'), (8, 'OS'), (9, 'Batterie');
 
--- 5. Insertion des données du tableau
+--  Insertion des données du tableau
 INSERT INTO MATERIEL (id, nom, annee, details, id_type, id_parent) VALUES
 (1, 'PC 1 – Unité centrale', 2016, NULL, 1, NULL),
 (2, 'PC 2 – Unité centrale', 2017, NULL, 1, NULL),
@@ -37,7 +37,7 @@ INSERT INTO MATERIEL (id, nom, annee, details, id_type, id_parent) VALUES
 (15, 'OS PC1', 2016, 'Windows 10 Pro', 8, 1);
 -- (Ajoutez les autres lignes ici si besoin)
 
--- 6. LA TRUQUE : On crée une vue que le PHP pourra lire facilement
+--  LA TRUQUE : On crée une vue que le PHP pourra lire facilement
 CREATE VIEW vue_materiel AS
 SELECT 
     m.id,
