@@ -8,29 +8,6 @@ try {
     die("Erreur de connexion : " . $e->getMessage());
 }
 
-// --- LOGIQUE D'INSERTION ---
-if (!empty($_POST['nom']) && !empty($_POST['id_type'])) {
-    $sql = "INSERT INTO MATERIEL (nom, annee, details, id_type, id_parent) 
-            VALUES (:nom, :annee, :details, :id_type, :id_parent)";
-    
-    $ins = $connexion->prepare($sql);
-    
-    // On gère le parent : si vide dans le formulaire, on envoie NULL à la base
-    $parentValue = !empty($_POST['id_parent']) ? $_POST['id_parent'] : null;
-
-    $ins->execute([
-        ':nom'       => $_POST['nom'],
-        ':annee'     => $_POST['annee'],
-        ':details'   => $_POST['details'],
-        ':id_type'   => $_POST['id_type'],
-        ':id_parent' => $parentValue
-    ]);
-
-    // Redirection pour éviter de renvoyer le formulaire en actualisant la page
-    header("Location: index.php");
-    exit;
-}
-
 // --- RÉCUPÉRATION DES DONNÉES ---
 
 // Détails d'un élément sélectionné au clic
