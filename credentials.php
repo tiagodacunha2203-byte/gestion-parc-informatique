@@ -3,5 +3,5 @@
   $charset = 'utf8';
   $user = 'root';
   $password = '';
-  $dbname = 'gpi';
+  $dbname = 'm2l_bd';
 ?>
