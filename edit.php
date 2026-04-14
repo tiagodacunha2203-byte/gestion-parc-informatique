@@ -1,9 +1,12 @@
-<?php require_once('auth.php'); ?>
-<?php
+<?php 
+require_once('auth.php');
 require_once('db.php');
 
 $id = $_GET['id'] ?? null;
-if (!$id) { header("Location: admin.php"); exit; }
+if (!$id) { 
+    header("Location: admin.php"); 
+    exit; 
+}
 
 // --- LOGIQUE DE MISE À JOUR ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,14 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':id_parent' => !empty($_POST['id_parent']) ? $_POST['id_parent'] : null,
         ':id'        => $id
     ]);
-    header("Location: admin.php?msg=Modifié avec succès");
+    header("Location: admin.php?msg=Modifie");
     exit;
 }
 
 // --- RÉCUPÉRATION DES INFOS ACTUELLES ---
 $stmt = $connexion->prepare("SELECT * FROM MATERIEL WHERE id = ?");
 $stmt->execute([$id]);
-$materièl = $stmt->fetch();
+$materiel = $stmt->fetch(); // Correction ici : pas d'accent
 
 $categories = $connexion->query("SELECT * FROM CATEGORIE ORDER BY libelle ASC")->fetchAll();
 $parents = $connexion->query("SELECT id, nom FROM MATERIEL WHERE id != $id ORDER BY nom ASC")->fetchAll();
@@ -42,31 +45,48 @@ $parents = $connexion->query("SELECT id, nom FROM MATERIEL WHERE id != $id ORDER
 <body class="bg-light p-5">
     <div class="container" style="max-width: 600px;">
         <div class="card shadow">
-            <div class="card-header bg-warning text-dark"><strong>Modifier : <?= htmlspecialchars($materièl['nom']) ?></strong></div>
+            <div class="card-header bg-warning text-dark">
+                <strong>Modifier : <?= htmlspecialchars($materiel['nom']) ?></strong>
+            </div>
             <div class="card-body">
                 <form method="post">
-                    <div class="mb-3"><label>Nom</label><input name="nom" class="form-control" value="<?= htmlspecialchars($materièl['nom']) ?>" required></div>
-                    <div class="mb-3"><label>Année</label><input name="annee" type="number" class="form-control" value="<?= $materièl['annee'] ?>"></div>
                     <div class="mb-3">
-                        <label>Catégorie</label>
+                        <label class="form-label">Nom</label>
+                        <input name="nom" class="form-control" value="<?= htmlspecialchars($materiel['nom']) ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Année</label>
+                        <input name="annee" type="number" class="form-control" value="<?= $materiel['annee'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Catégorie</label>
                         <select name="id_type" class="form-select">
                             <?php foreach($categories as $cat): ?>
-                                <option value="<?= $cat['id_type'] ?>" <?= $cat['id_type'] == $materièl['id_type'] ? 'selected' : '' ?>><?= $cat['libelle'] ?></option>
+                                <option value="<?= $cat['id_type'] ?>" <?= $cat['id_type'] == $materiel['id_type'] ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($cat['libelle']) ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label>Parent (Rattaché à)</label>
+                        <label class="form-label">Parent (Rattaché à)</label>
                         <select name="id_parent" class="form-select">
                             <option value="">Aucun</option>
                             <?php foreach($parents as $p): ?>
-                                <option value="<?= $p['id'] ?>" <?= $p['id'] == $materièl['id_parent'] ? 'selected' : '' ?>><?= $p['nom'] ?></option>
+                                <option value="<?= $p['id'] ?>" <?= $p['id'] == $materiel['id_parent'] ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($p['nom']) ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="mb-3"><label>Détails</label><textarea name="details" class="form-control"><?= htmlspecialchars($materièl['details']) ?></textarea></div>
-                    <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-                    <a href="admin.php" class="btn btn-secondary">Annuler</a>
+                    <div class="mb-3">
+                        <label class="form-label">Détails</label>
+                        <textarea name="details" class="form-control"><?= htmlspecialchars($materiel['details']) ?></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        <a href="admin.php" class="btn btn-secondary">Annuler</a>
+                    </div>
                 </form>
             </div>
         </div>
