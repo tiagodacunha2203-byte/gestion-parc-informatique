@@ -3,7 +3,7 @@ session_start();
 $error = "";
 
 if (isset($_POST['password'])) {
-    // Mot de passe de test (à changer pour la production)
+    // Mot de passe de test pour l'examen
     if ($_POST['password'] === 'admin123') {
         $_SESSION['admin_logged'] = true;
         header("Location: admin.php");
@@ -24,14 +24,18 @@ if (isset($_POST['password'])) {
     <div class="container" style="max-width: 400px;">
         <div class="card shadow p-4">
             <h3 class="text-center mb-4">Accès Restreint</h3>
-            <?php if($error): ?> <div class="alert alert-danger"><?= $error ?></div> <?php endif; ?>
+            <?php if($error): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
             <form method="post">
                 <div class="mb-3">
-                    <label>Mot de passe admin</label>
+                    <label class="form-label">Mot de passe admin</label>
                     <input type="password" name="password" class="form-control" required autofocus>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-                <div class="text-center mt-3"><a href="index.php" class="text-muted">Retour au site</a></div>
+                <div class="text-center mt-3">
+                    <a href="index.php" class="text-muted small text-decoration-none">← Retour au site</a>
+                </div>
             </form>
         </div>
     </div>
