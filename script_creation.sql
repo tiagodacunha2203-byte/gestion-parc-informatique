@@ -44,10 +44,9 @@ SELECT
     m.nom,
     m.annee,
     m.details,
+    m.id_type AS id_type_raw, -- Indispensable pour le filtre PHP
     c.libelle AS type_libelle,
     p.nom AS parent_nom
 FROM MATERIEL m
 LEFT JOIN CATEGORIE c ON m.id_type = c.id_type
 LEFT JOIN MATERIEL p ON m.id_parent = p.id;
-
-ALTER TABLE MATERIEL AUTO_INCREMENT = 35;
